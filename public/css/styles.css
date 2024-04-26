@@ -1,0 +1,82 @@
+@font-face {
+  font-family: FontSpecial;
+  src: url(/fonts/Bowlby_One_SC/BowlbyOneSC-Regular.ttf);
+}
+
+* {
+  margin: 0;
+}
+
+body{
+  height: 100vh;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+}
+
+#container {
+  height: 80vh;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.incidencia, .user{
+  height: 200px;
+  border-radius: 15px;
+  animation: slideIn 0.7s ease-out forwards;
+  margin: 10px;
+  overflow: hidden; 
+  position: relative; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  row-gap: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.144);
+  transition: 0.5s;
+  flex-basis: 40%;
+}
+
+.incidencia {
+  background-image: url(/img/danger.jpg); 
+  background-size: cover;
+}
+
+.user {
+  background-image: url(/img/user.png);
+  background-size: 35%;
+  background-position: top 20px center;
+  background-repeat: no-repeat;
+}
+
+.h1_users{
+  font-family: FontSpecial;
+  position: absolute;
+  bottom: 10%;
+  text-align: center;
+}
+
+.incidencia h1{
+  font-family: FontSpecial;
+  font-size: 30px;
+}
+
+.incidencia:hover,
+.user:hover {
+  width: 350px;
+  height: 250px;
+  font-size: 30px;
+}
+
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-300%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+
+}
