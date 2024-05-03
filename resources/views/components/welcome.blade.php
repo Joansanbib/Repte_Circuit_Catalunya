@@ -7,11 +7,8 @@
     <div class="card user">
       <h1 class="h1_users">USUARIS</h1>
     </div>
-    <div class="card incidencia">
-      <h1>INCIDÈNCIES</h1>
-    </div>
-    <div class="card user">
-      <h1 class="h1_users">USUARIS</h1>
+    <div class="card zones">
+      <h1>ZONES</h1>
     </div>
   </section>
 </body>

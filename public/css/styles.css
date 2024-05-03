@@ -22,7 +22,7 @@ body{
   align-items: center;
 }
 
-.incidencia, .user{
+.incidencia, .user, .zones{
   height: 200px;
   border-radius: 15px;
   animation: slideIn 0.7s ease-out forwards;
@@ -45,9 +45,17 @@ body{
 
 .user {
   background-image: url(/img/user.png);
-  background-size: 35%;
+  background-size: 25%;
   background-position: top 20px center;
   background-repeat: no-repeat;
+}
+
+.zones {
+  background-image: url(/img/zones.jpg);
+  background-size: cover;
+}
+.zones h1{
+  color: rgb(255, 255, 255);
 }
 
 .h1_users{
@@ -63,7 +71,7 @@ body{
 }
 
 .incidencia:hover,
-.user:hover {
+.user:hover, .zones:hover {
   width: 350px;
   height: 250px;
   font-size: 30px;
