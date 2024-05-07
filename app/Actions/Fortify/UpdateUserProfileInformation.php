@@ -19,29 +19,24 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     {
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.Usuari::class],
-            'NIF' => ['required', 'string', 'size:9', 'unique:'.Usuari::class],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique(Usuari::class)->ignore($user->id)],
+            'NIF' => ['required', 'string', 'size:9', Rule::unique(Usuari::class)->ignore($user->id)],
             'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
-        ],[
-            'NIF.size' => 'El NIF ha de tenir 9 caràcters.',
-            'NIF.unique' => 'Aquest NIF ja està registrat.',
-
+            'Nom' => ['required', 'string', 'max:255'],
+            'Cognoms' => ['required', 'string', 'max:255'],
         ])->validateWithBag('updateProfileInformation');
 
         if (isset($input['photo'])) {
             $user->updateProfilePhoto($input['photo']);
         }
 
-        if ($input['email'] !== $user->email &&
-            $user instanceof MustVerifyEmail) {
-            $this->updateVerifiedUser($user, $input);
-        } else {
-            $user->forceFill([
-                'name' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.Usuari::class],
-                'NIF' => ['required', 'string', 'size:9', 'unique:'.Usuari::class],
-            ])->save();
-        }
+        $user->forceFill([
+            'name' => $input['name'],
+            'email' => $input['email'],
+            'NIF' => $input['NIF'],
+            'Nom' => $input['Nom'],
+            'Cognoms' => $input['Cognoms'],
+        ])->save();
     }
 
     /**

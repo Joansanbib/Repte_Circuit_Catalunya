@@ -1,0 +1,87 @@
+@font-face {
+    font-family: FontSpecial;
+    src: url(fonts/PTSans-Regular.ttf);
+  }
+  
+*{
+    margin: 0;
+    font-family: FontSpecial; 
+    font-size: 20px;
+}
+body{
+    height: 100vh;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: start;
+
+}
+#container{
+    width: 800px;
+    height: 50vh;
+    margin: 0px auto;
+    margin-top: 20px;
+    background-color: #ccccccbb;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.144);
+    border-radius: 15px;
+    display: grid;
+    grid-template-rows: 1fr 2fr;
+    grid-template-columns: 1fr;
+    justify-items: center;
+
+}
+#container #header{
+    height: 40%;
+    width: 80%;
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+}
+#container #search{
+    height: 100%;
+    width: 100%;
+    border: none;
+    outline: none;
+    border-radius: 80px;
+    padding-left: 50px;
+    box-shadow: 0 0 10px rgba(46, 45, 45, 0.144);
+    font-size: 20px;
+}
+#container img{
+    width: 2rem;
+    height: 2rem;
+    position: relative;
+    right: 8%;
+    margin: auto;
+    cursor: pointer;
+}
+#options{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+#info{
+    width: 25%;
+    height: 25%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    background-color: #ccccccc7;
+    margin: 10px;
+    box-shadow: 0 0 0px rgba(5, 5, 5, 0.356);
+    transition: 1s ease;
+    cursor: pointer;
+}
+#info:hover{
+    transform: scale(1.2);
+}
+input[type=checkbox]{
+    line-height: normal;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+label{
+    cursor: pointer;
+}

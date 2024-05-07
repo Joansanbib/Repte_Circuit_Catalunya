@@ -64,6 +64,7 @@
             <x-label for="email" value="{{ __('Email') }}" />
             <x-input id="email" type="email" class="mt-1 block w-full" wire:model="state.email" required autocomplete="username" />
             <x-input-error for="email" class="mt-2" />
+            
 
             @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::emailVerification()) && ! $this->user->hasVerifiedEmail())
                 <p class="text-sm mt-2">
@@ -80,6 +81,26 @@
                     </p>
                 @endif
             @endif
+        </div>
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="NIF" value="{{ __('NIF') }}" />
+            <x-input id="NIF" type="text" class="mt-1 block w-full" wire:model="state.NIF" required/>
+            <x-input-error for="NIF" class="mt-2" />
+        </div>
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="Nom" value="{{ __('Nom') }}" />
+            <x-input id="Nom" type="text" class="mt-1 block w-full" wire:model="state.Nom" required/>
+            <x-input-error for="Nom" class="mt-2" />
+        </div>
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="Cognoms" value="{{ __('Cognoms') }}" />
+            <x-input id="Cognoms" type="text" class="mt-1 block w-full" wire:model="state.Cognoms" required/>
+            <x-input-error for="Cognoms" class="mt-2" />
+        </div>
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="Data_naixament" value="{{ __('Data naixament') }}" />
+            <x-input id="Data_naixament" type="date" class="mt-1 block w-full" wire:model="state.Data_naixament" required/>
+            <x-input-error for="Data_naixament" class="mt-2" />
         </div>
     </x-slot>
 
