@@ -26,3 +26,8 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+Route::resource('incidences', IncidenceController::class);
+Route::resource('zones', ZoneController::class);
+Route::resource('users', UserController::class);
+Route::resource('user_resols', UserResolController::class);
