@@ -16,12 +16,12 @@ class IncidentPolicy
     }
     public function delete(Usuari $user, Incidencia $incident)
 {
-    return $user->role === 'admin';
+    return $user->rol === 'admin';
 }
 
 public function update(Usuari $user, Incidencia $incident)
 {
-    return $user->id === $incident->user_id || $user->role === 'admin';
+    return $user->id === $incident->user_id || $user->rol === 'admin';
 }
 
 }

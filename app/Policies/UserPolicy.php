@@ -15,7 +15,7 @@ class UserPolicy
     public function viewAny(Usuari $Usuari)
     {
         // Only admins can view the user list
-        return $Usuari->role === 'admin';
+        return $Usuari->rol === 'admin';
     }
 
     /**
@@ -24,7 +24,7 @@ class UserPolicy
     public function view(Usuari $Usuari, Usuari $model)
     {
         // Users can view a user if they are an admin or they are viewing their own profile
-        return $Usuari->role === 'admin' || $Usuari->id === $model->id;
+        return $Usuari->rol === 'admin' || $Usuari->id === $model->id;
     }
 
     /**
@@ -33,7 +33,7 @@ class UserPolicy
     public function create(Usuari $Usuari)
     {
         // Only admins can create users
-        return $Usuari->role === 'admin';
+        return $Usuari->rol === 'admin';
     }
 
     /**
@@ -42,7 +42,7 @@ class UserPolicy
     public function update(Usuari $Usuari, Usuari $model)
     {
         // Users can update a user if they are an admin or updating their own profile
-        return $Usuari->role === 'admin' || $Usuari->id === $model->id;
+        return $Usuari->rol === 'admin' || $Usuari->id === $model->id;
     }
 
     /**
@@ -51,6 +51,6 @@ class UserPolicy
     public function delete(Usuari $Usuari, Usuari $model)
     {
         // Only admins can delete a user
-        return $Usuari->role === 'admin';
+        return $Usuari->rol === 'admin';
     }
 }
