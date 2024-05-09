@@ -16,7 +16,7 @@ class ZonePolicy
     public function viewAny(Usuari $Usuari)
     {
         // Only admins can view zones
-        return $Usuari->rol === 'admin';
+        return $Usuari->Rol === 'admin';
     }
 
     /**
@@ -25,7 +25,7 @@ class ZonePolicy
     public function view(Usuari $Usuari, Zona $zone)
     {
         // Only admins can view a zone
-        return $Usuari->rol === 'admin';
+        return $Usuari->Rol === 'admin';
     }
 
     /**
@@ -34,7 +34,7 @@ class ZonePolicy
     public function create(Usuari $Usuari)
     {
         // Only admins can create a zone
-        return $Usuari->rol === 'admin';
+        return $Usuari->Rol === 'admin';
     }
 
     /**
@@ -43,7 +43,7 @@ class ZonePolicy
     public function update(Usuari $Usuari, Zona $zone)
     {
         // Only admins can update a zone
-        return $Usuari->rol === 'admin';
+        return $Usuari->Rol === 'admin';
     }
 
     /**
@@ -52,6 +52,6 @@ class ZonePolicy
     public function delete(Usuari $Usuari, Zona $zone)
     {
         // Only admins can delete a zone
-        return $Usuari->rol === 'admin';
+        return $Usuari->Rol === 'admin';
     }
 }

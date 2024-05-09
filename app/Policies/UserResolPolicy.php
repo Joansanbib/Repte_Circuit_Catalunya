@@ -16,7 +16,7 @@ class UsuariResolPolicy
     public function viewAny(Usuari $Usuari)
     {
         // Only admins can view all resolutions
-        return $Usuari->rol === 'admin';
+        return $Usuari->Rol === 'admin';
     }
 
     /**
@@ -25,7 +25,7 @@ class UsuariResolPolicy
     public function view(Usuari $Usuari, UsuariResol $UsuariResol)
     {
         // Usuaris can view a resolution if they are an admin or involved in the resolution
-        return $Usuari->rol === 'admin' || $Usuari->id === $UsuariResol->Usuari_id;
+        return $Usuari->Rol === 'admin' || $Usuari->id === $UsuariResol->Usuari_id;
     }
 
     /**
@@ -43,7 +43,7 @@ class UsuariResolPolicy
     public function update(Usuari $Usuari, UsuariResol $UsuariResol)
     {
         // Usuaris can update a resolution if they are an admin or own the resolution
-        return $Usuari->rol === 'admin' || $Usuari->id === $UsuariResol->Usuari_id;
+        return $Usuari->Rol === 'admin' || $Usuari->id === $UsuariResol->Usuari_id;
     }
 
     /**
@@ -52,6 +52,6 @@ class UsuariResolPolicy
     public function delete(Usuari $Usuari, UsuariResol $UsuariResol)
     {
         // Only admins can delete a resolution
-        return $Usuari->rol === 'admin';
+        return $Usuari->Rol === 'admin';
     }
 }

@@ -38,5 +38,19 @@ class Usuari extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    /**
+     * @param string $role
+     * @return bool
+     */
+    public function hasRole($role)
+    {
+        return $this->Rol === $role;
+    }
+    
 }
+
+
+
 
