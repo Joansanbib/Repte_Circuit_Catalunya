@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +20,25 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth:api')->group(function () {
-    Route::get('/incidencia', [ApiController::class, 'getAllIncidents'])->middleware('role:admin');
-    Route::get('/incidencia/usuari', [ApiController::class, 'getUserIncidents']);
-    Route::post('/incidencia', [ApiController::class, 'createIncident']);
-    Route::put('/incidencia/{id}', [ApiController::class, 'updateIncident']);
-    Route::delete('/incidencia/{id}', [ApiController::class, 'deleteIncident'])->middleware('role:admin');
+    // Incidencia Routes
+    Route::get('/incidencias', [ApiController::class, 'getAllIncidents'])->middleware('role:admin');
+    Route::get('/incidencias/usuari', [ApiController::class, 'getUserIncidents']);
+    Route::post('/incidencias', [ApiController::class, 'createIncident']);
+    Route::put('/incidencias/{id}', [ApiController::class, 'updateIncident']);
+    Route::delete('/incidencias/{id}', [ApiController::class, 'deleteIncident'])->middleware('role:admin');
+    Route::get('/incidencias/search', [ApiController::class, 'searchIncidents']); // Search endpoint for Incidencias
+
+    // UsuariResol Routes
+    Route::get('/usuari_resols', [ApiController::class, 'indexUsuariResol']);
+    Route::post('/usuari_resols', [ApiController::class, 'storeUsuariResol']);
+    Route::get('/usuari_resols/{id}', [ApiController::class, 'showUsuariResol']);
+    Route::put('/usuari_resols/{id}', [ApiController::class, 'updateUsuariResol']);
+    Route::delete('/usuari_resols/{id}', [ApiController::class, 'destroyUsuariResol']);
+    Route::get('/usuari_resols/search', [ApiController::class, 'searchUsuariResol']); // Search endpoint for UsuariResol
+
+    // Usuari (User) Routes
+    Route::get('/users/search', [ApiController::class, 'searchUsers']); // Search endpoint for Users
+
+    // Zona (Zone) Routes
+    Route::get('/zones/search', [ApiController::class, 'searchZones']); // Search endpoint for Zones
 });
