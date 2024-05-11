@@ -6,41 +6,109 @@ use Illuminate\Http\Request;
 use App\Models\Zona;
 use Illuminate\Support\Facades\Auth;
 
-class ZoneController extends Controller 
+class ZoneController extends Controller
 {
     /**
      * Display a listing of the zones
      */
 
+    public function index()
+    {
+        $this->authorize('viewAny', Zona::class);
 
-     /**
-      * Show the form for ceating a new zone
-      */
-
-
-      /**
-       * Store a newly created zone in db
-       */
+        $zones = Zona::all();
+        return view('zones.index', ['zones' => $zones]);
+    }
 
 
-       /**
-        * Display the specified zone
-        */
+    /**
+     * Show the form for ceating a new zone
+     */
 
 
-        /**
-         * Show the form for editing the specified zone
-         */
+    public function create()
+    {
+        $this->authorize('create', Zona::class);
+
+        return view('zones.create');
+    }
 
 
-         /**
-          * Update the specified zone in db
-          */
+    /**
+     * Store a newly created zone in db
+     */
 
-          
-          /**
-           * Remove the specified zone from db
-           */
-       
+
+    public function store(Request $request)
+    {
+        $this->authorize('create', Zona::class);
+
+        $validatedData = $request->validate([
+            'Nom' => 'required|max:255',
+            'Descripcio' => 'required',
+        ]);
+
+        $zone = Zona::create($validatedData);
+
+        return required()->route('zones.index')->with('success', 'Zone created successfully');
+    }
+
+    /**
+     * Display the specified zone
+     */
+
+
+    public function show(Zona $zone)
+    {
+        $this->authorize('view', $zone);
+
+        return view('zones.show', ['zone' => $zone]);
+    }
+
+    /**
+     * Show the form for editing the specified zone
+     */
+
+
+    public function edit(Zona $zone)
+    {
+        $this->authorize('update', $zone);
+
+        return view('zones.edit', ['zone' => $zone]);
+    }
+
+    /**
+     * Update the specified zone in db
+     */
+
+
+    public function update(Request $request, Zona $zone)
+    {
+        $this->authorize('update', $zone);
+
+        $validatedData = $request->validate([
+            'Nom' => 'required|max:255',
+            'Descripcio' => 'required',
+        ]);
+
+        $zone->update($validatedData);
+
+        return redirect()->route('zones.index')->with('success', 'Zone updated successfully');
+
+    }
+
+    /**
+     * Remove the specified zone from db
+     */
+
+
+    public function destroy(Zona $zone)
+    {
+        $this->authorize('delete', $zone);
+
+        $zone->delete();
+
+        return redirect()->route('zones.index')->with('success', 'Zone deleted successfully');
+    }
 
 }

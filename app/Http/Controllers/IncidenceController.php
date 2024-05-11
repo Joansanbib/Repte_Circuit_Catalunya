@@ -14,15 +14,15 @@ class IncidenceController extends Controller
 
     public function index()
     {
-        $this->authorize('viewAny',Incidencia::class);
+        $this->authorize('viewAny', Incidencia::class);
 
         $incident = Incidencia::where('user_id', Auth::id())->get();
         return view('incidences.index', ['incidebes' => $incident]);
     }
 
-     /**
-      * Show the form for creating a new incidence
-      */
+    /**
+     * Show the form for creating a new incidence
+     */
     public function create()
     {
         $this->authorize('create', Incidencia::class);
@@ -30,18 +30,18 @@ class IncidenceController extends Controller
         return view('incidences.create');
     }
 
-      /**
-       * Store a newly created incidence in db
-       */
-    public function store (Request $request)
+    /**
+     * Store a newly created incidence in db
+     */
+    public function store(Request $request)
     {
         $this->authorize('create', Incidencia::class);
         $validatedData = $request->validate([
-            'description' => 'required|max:255',
-            'status' => 'required',
-            'priority' => 'required',
-            'location' => 'required',
-            'image' => 'sometimes|image|max:5000',
+            'Descripcio' => 'required|max:255',
+            'Estat' => 'required',
+            'Prioritat' => 'required',
+            'Zona' => 'required',
+            'Ruta_img' => 'sometimes|image|max:5000',
         ]);
         $incident = new Incidencia($validatedData);
         $incident->user_id = Auth::id();
@@ -55,51 +55,51 @@ class IncidenceController extends Controller
         return redirect()->Route('incidences.index')->with('success', 'Incidence created successfully');
 
     }
-       
-       /**
-        * Display the specified incidence
-        */
 
-        public function show(Incidence $incidence)
-        {
-            $this->authorize('view', $incidence);
-    
-            return view('incidences.show', ['incidence' => $incidence]);
-        }
+    /**
+     * Display the specified incidence
+     */
 
+    public function show(Incidencia $incidence)
+    {
+        $this->authorize('view', $incidence);
 
-       /**
-        * Show the form for editing specified incidence 
-        */
+        return view('incidences.show', ['incidence' => $incidence]);
+    }
 
 
-        public function edit(Incidence $incidence)
-        {
-            $this->authorize('update', $incidence);
-    
-            return view('incidences.edit', ['incidence' => $incidence]);
-        }
+    /**
+     * Show the form for editing specified incidence 
+     */
 
 
-        /**
-         * Update the specified incidence in storage
-         */
+    public function edit(Incidencia $incidence)
+    {
+        $this->authorize('update', $incidence);
+
+        return view('incidences.edit', ['incidence' => $incidence]);
+    }
 
 
-         public function update(Request $request, Incidence $incidence)
+    /**
+     * Update the specified incidence in storage
+     */
+
+
+    public function update(Request $request, Incidencia $incidence)
     {
         $this->authorize('update', $incidence);
 
         $validatedData = $request->validate([
-            'description' => 'required|max:255',
-            'status' => 'required',
-            'priority' => 'required',
-            'location' => 'required',
-            'image' => 'sometimes|image|max:5000',
+            'Descripcio' => 'required|max:255',
+            'Estat' => 'required',
+            'Prioritat' => 'required',
+            'Zona' => 'required',
+            'Ruta_img' => 'sometimes|image|max:5000',
         ]);
 
-        if ($request->hasFile('image')) {
-            $incidence->image = $request->file('image')->store('public/incidences');
+        if ($request->hasFile('Ruta_img')) {
+            $incidence->image = $request->file('Ruta_img')->store('public/incidences');
         }
 
         $incidence->update($validatedData);
@@ -108,12 +108,12 @@ class IncidenceController extends Controller
     }
 
 
-         /**
-          * Remove the specified incidence in db
-          */
+    /**
+     * Remove the specified incidence in db
+     */
 
 
-          public function destroy(Incidence $incidence)
+    public function destroy(Incidencia $incidence)
     {
         $this->authorize('delete', $incidence);
 
