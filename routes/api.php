@@ -15,13 +15,20 @@ use App\Http\Controllers\ApiController;
 |
 */
 
+Route::get('/test', function () {
+    return response()->json(['message' => 'API is working']);
+});
+
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth:api')->group(function () {
+
+Route::middleware('auth:sanctum')->group(function () {
     // Incidencia Routes
-    Route::get('/incidencias', [ApiController::class, 'getAllIncidents'])->middleware('role:admin');
+//    Route::get('/incidencias', [ApiController::class, 'getAllIncidents'])->middleware('role:admin');
+    Route::get('/incidencias', [ApiController::class, 'getAllIncidents']);
     Route::get('/incidencias/usuari', [ApiController::class, 'getUserIncidents']);
     Route::post('/incidencias', [ApiController::class, 'createIncident']);
     Route::put('/incidencias/{id}', [ApiController::class, 'updateIncident']);
