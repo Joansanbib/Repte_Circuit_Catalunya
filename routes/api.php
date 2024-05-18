@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\IncidenceController;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,11 +17,6 @@ use App\Http\Controllers\ApiController;
 |
 */
 
-Route::get('/test', function () {
-    return response()->json(['message' => 'API is working']);
-});
-
-
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -27,12 +24,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->group(function () {
     // Incidencia Routes
-//    Route::get('/incidencias', [ApiController::class, 'getAllIncidents'])->middleware('role:admin');
     Route::get('/incidencias', [ApiController::class, 'getAllIncidents']);
     Route::get('/incidencias/usuari', [ApiController::class, 'getUserIncidents']);
     Route::post('/incidencias', [ApiController::class, 'createIncident']);
     Route::put('/incidencias/{id}', [ApiController::class, 'updateIncident']);
-    Route::delete('/incidencias/{id}', [ApiController::class, 'deleteIncident'])->middleware('role:admin');
+    Route::delete('/incidencias/{id}', [ApiController::class, 'deleteIncident']);
     Route::get('/incidencias/search', [ApiController::class, 'searchIncidents']); // Search endpoint for Incidencias
 
     // UsuariResol Routes
