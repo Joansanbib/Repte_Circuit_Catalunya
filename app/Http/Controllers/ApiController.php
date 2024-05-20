@@ -41,8 +41,10 @@ class ApiController extends Controller
 
         return response()->json($incident, 201);
     }
+//
+//pr
 
-    public function updateIncident(Request $request, $id)
+    public function updateIncident(Request $request, $id, $user)
     {
         $incident = Incidencia::find($id);
         $this->authorize('isOwnerOrAdmin', $incident);
