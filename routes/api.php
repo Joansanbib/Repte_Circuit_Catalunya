@@ -27,15 +27,38 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     });
 
     // Incidencia Routes
-    Route::get('/incidencias', [IncidenceController::class, 'getAllIncidents'])->middleware(function ($request, $next) {
+    Route::get('/incidencias', [IncidenceController::class, 'getAllIncidents']);
+    Route::post('/incidencias', [IncidenceController::class, 'createIncident']);
+    Route::put('/incidencias/{id}', [IncidenceController::class, 'updateIncident']);
+    Route::delete('/incidencias/{id}', [IncidenceController::class, 'deleteIncident']);
+    Route::get('/incidencias/search', [IncidenceController::class, 'searchIncidents']); // Search endpoint for Incidencias
+
+    // UsuariResol Routes
+    Route::get('/usuari_resols', [ApiController::class, 'indexUsuariResol']);
+    Route::post('/usuari_resols', [ApiController::class, 'storeUsuariResol']);
+    Route::get('/usuari_resols/{id}', [ApiController::class, 'showUsuariResol']);
+    Route::put('/usuari_resols/{id}', [ApiController::class, 'updateUsuariResol']);
+    Route::delete('/usuari_resols/{id}', [ApiController::class, 'destroyUsuariResol']);
+    Route::get('/usuari_resols/search', [ApiController::class, 'searchUsuariResol']); // Search endpoint for UsuariResol
+
+    // Usuari Routes
+    Route::get('/users/search', [ApiController::class, 'searchUsers']); // Search endpoint for Users
+
+    // Zona Routes
+    Route::get('/zones/search', [ApiController::class, 'searchZones']); // Search endpoint for Zones
+});
+
+// Middleware for checking token permissions
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::get('/incidencias', function (Request $request, $next) {
         if ($request->user()->tokenCan('read')) {
             return $next($request);
         } else {
             return response()->json(['message' => 'El token no tiene permisos'], 403);
         }
     });
-
-    Route::post('/incidencias', [IncidenceController::class, 'createIncident'])->middleware(function ($request, $next) {
+    
+    Route::post('/incidencias', function (Request $request, $next) {
         if ($request->user()->tokenCan('create')) {
             return $next($request);
         } else {
@@ -43,7 +66,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         }
     });
 
-    Route::put('/incidencias/{id}', [IncidenceController::class, 'updateIncident'])->middleware(function ($request, $next) {
+    Route::put('/incidencias/{id}', function (Request $request, $next) {
         if ($request->user()->tokenCan('update')) {
             return $next($request);
         } else {
@@ -51,7 +74,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         }
     });
 
-    Route::delete('/incidencias/{id}', [IncidenceController::class, 'deleteIncident'])->middleware(function ($request, $next) {
+    Route::delete('/incidencias/{id}', function (Request $request, $next) {
         if ($request->user()->tokenCan('delete')) {
             return $next($request);
         } else {
@@ -59,7 +82,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         }
     });
 
-    Route::get('/incidencias/search', [IncidenceController::class, 'searchIncidents'])->middleware(function ($request, $next) {
+    Route::get('/incidencias/search', function (Request $request, $next) {
         if ($request->user()->tokenCan('read')) {
             return $next($request);
         } else {
@@ -68,7 +91,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     });
 
     // UsuariResol Routes
-    Route::get('/usuari_resols', [ApiController::class, 'indexUsuariResol'])->middleware(function ($request, $next) {
+    Route::get('/usuari_resols', function (Request $request, $next) {
         if ($request->user()->tokenCan('read')) {
             return $next($request);
         } else {
@@ -76,7 +99,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         }
     });
 
-    Route::post('/usuari_resols', [ApiController::class, 'storeUsuariResol'])->middleware(function ($request, $next) {
+    Route::post('/usuari_resols', function (Request $request, $next) {
         if ($request->user()->tokenCan('create')) {
             return $next($request);
         } else {
@@ -84,7 +107,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         }
     });
 
-    Route::get('/usuari_resols/{id}', [ApiController::class, 'showUsuariResol'])->middleware(function ($request, $next) {
+    Route::get('/usuari_resols/{id}', function (Request $request, $next) {
         if ($request->user()->tokenCan('read')) {
             return $next($request);
         } else {
@@ -92,7 +115,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         }
     });
 
-    Route::put('/usuari_resols/{id}', [ApiController::class, 'updateUsuariResol'])->middleware(function ($request, $next) {
+    Route::put('/usuari_resols/{id}', function (Request $request, $next) {
         if ($request->user()->tokenCan('update')) {
             return $next($request);
         } else {
@@ -100,7 +123,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         }
     });
 
-    Route::delete('/usuari_resols/{id}', [ApiController::class, 'destroyUsuariResol'])->middleware(function ($request, $next) {
+    Route::delete('/usuari_resols/{id}', function (Request $request, $next) {
         if ($request->user()->tokenCan('delete')) {
             return $next($request);
         } else {
@@ -108,7 +131,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         }
     });
 
-    Route::get('/usuari_resols/search', [ApiController::class, 'searchUsuariResol'])->middleware(function ($request, $next) {
+    Route::get('/usuari_resols/search', function (Request $request, $next) {
         if ($request->user()->tokenCan('read')) {
             return $next($request);
         } else {
@@ -117,7 +140,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     });
 
     // Usuari Routes
-    Route::get('/users/search', [ApiController::class, 'searchUsers'])->middleware(function ($request, $next) {
+    Route::get('/users/search', function (Request $request, $next) {
         if ($request->user()->tokenCan('read')) {
             return $next($request);
         } else {
@@ -126,7 +149,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     });
 
     // Zona Routes
-    Route::get('/zones/search', [ApiController::class, 'searchZones'])->middleware(function ($request, $next) {
+    Route::get('/zones/search', function (Request $request, $next) {
         if ($request->user()->tokenCan('read')) {
             return $next($request);
         } else {
