@@ -2,6 +2,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\IncidenceController;
+use App\Http\Controllers\ZoneController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserResolController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('dashboard');
 });
 
 Route::middleware([
@@ -29,6 +34,8 @@ Route::middleware([
 });
 
 Route::resource('incidences', IncidenceController::class);
+Route::get('/incidences/delete/{incidence}', [IncidenceController::class, 'destroy'])->name('incidences.destroy');
 Route::resource('zones', ZoneController::class);
 Route::resource('users', UserController::class);
+Route::get('/users/delete/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 Route::resource('user_resols', UserResolController::class);

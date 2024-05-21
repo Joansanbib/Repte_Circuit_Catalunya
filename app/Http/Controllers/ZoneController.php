@@ -14,8 +14,6 @@ class ZoneController extends Controller
 
     public function index()
     {
-        $this->authorize('viewAny', Zona::class);
-
         $zones = Zona::all();
         return view('zones.index', ['zones' => $zones]);
     }

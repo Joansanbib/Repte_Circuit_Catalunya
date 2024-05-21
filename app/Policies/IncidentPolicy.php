@@ -20,28 +20,28 @@ class IncidentPolicy
         //
     }
 
-    public function viewAny(Usaria $user)
+    public function viewAny(Usuari $user)
     {
         return true;
     }
 
 
-    public function view(Usaria $user, Incidencia $incident)
+    public function view(Usuari $user, Incidencia $incident)
     {
         return $user->Rol ==='admin' || $user->id === $incident->user_id;
     }
 
-    public function create(Usaria $user)
+    public function create(Usuari $user)
     {
         return true; //only auth user can create incidences
     }
 
-    public function update(Usaria $user, Incidencia $incident)
+    public function update(Usuari $user, Incidencia $incident)
     {
         return $user->Rol === 'admin' || $user->id ===$incident->user_id;
     }
 
-    public function delete(Usaria $user, Incidencia $incident)
+    public function delete(Usuari $user, Incidencia $incident)
     {
         return $user->Rol === 'admin'; //only admin can delete incidences 
     }

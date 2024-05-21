@@ -14,10 +14,8 @@ class IncidenceController extends Controller
 
     public function index()
     {
-        $this->authorize('viewAny', Incidencia::class);
-
-        $incident = Incidencia::where('user_id', Auth::id())->get();
-        return view('incidences.index', ['incidebes' => $incident]);
+        $incident = Incidencia::all();
+        return view('incidencies.index', ['incidencies' => $incident]);
     }
 
     /**
@@ -25,9 +23,7 @@ class IncidenceController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', Incidencia::class);
-
-        return view('incidences.create');
+        return view('incidencies.create');
     }
 
     /**
@@ -35,21 +31,21 @@ class IncidenceController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('create', Incidencia::class);
         $validatedData = $request->validate([
-            'Descripcio' => 'required|max:255',
+            'Nom' => 'required|max:150',
+            'Descripcio' => 'required|max:500',
             'Estat' => 'required',
             'Prioritat' => 'required',
-            'Zona' => 'required',
-            'Ruta_img' => 'sometimes|image|max:5000',
+            //'Zona' => 'required',
+            //'imatge' => 'required|image',
+            'Rol_assignat' => 'required',
         ]);
         $incident = new Incidencia($validatedData);
-        $incident->user_id = Auth::id();
-
-        if ($request->hasFile('image')) {
-            $incident->image = $request->file('image')->store('public/incidences');
-        }
-
+        //$incident->Usuari_denunciant = Auth::id();
+        $incident->Data = now();
+        // if ($request->hasFile('image')) {
+        //     $incident->image = $request->file('image')->store('public/incidences');
+        // }
         $incident->save();
 
         return redirect()->Route('incidences.index')->with('success', 'Incidence created successfully');
@@ -62,9 +58,9 @@ class IncidenceController extends Controller
 
     public function show(Incidencia $incidence)
     {
-        $this->authorize('view', $incidence);
 
-        return view('incidences.show', ['incidence' => $incidence]);
+        $incident = Incidencia::all();
+        return view('incidencies.index', ['incidencies' => $incident]);
     }
 
 
@@ -75,9 +71,7 @@ class IncidenceController extends Controller
 
     public function edit(Incidencia $incidence)
     {
-        $this->authorize('update', $incidence);
-
-        return view('incidences.edit', ['incidence' => $incidence]);
+        return view('incidencies.edit', ['incidencia' => $incidence]);
     }
 
 
@@ -88,19 +82,17 @@ class IncidenceController extends Controller
 
     public function update(Request $request, Incidencia $incidence)
     {
-        $this->authorize('update', $incidence);
 
         $validatedData = $request->validate([
-            'Descripcio' => 'required|max:255',
+            'Nom' => 'required|max:150',
+            'Descripcio' => 'required|max:500',
             'Estat' => 'required',
             'Prioritat' => 'required',
-            'Zona' => 'required',
-            'Ruta_img' => 'sometimes|image|max:5000',
+            //'Zona' => 'required',
+            //'imatge' => 'required|image',
+            'Rol_assignat' => 'required',
         ]);
 
-        if ($request->hasFile('Ruta_img')) {
-            $incidence->image = $request->file('Ruta_img')->store('public/incidences');
-        }
 
         $incidence->update($validatedData);
 
@@ -115,8 +107,6 @@ class IncidenceController extends Controller
 
     public function destroy(Incidencia $incidence)
     {
-        $this->authorize('delete', $incidence);
-
         $incidence->delete();
 
         return redirect()->route('incidences.index')->with('success', 'Incidence deleted successfully.');

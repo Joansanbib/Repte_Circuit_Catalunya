@@ -24,9 +24,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // Middleware for checking token permissions
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('/incidencias', function (Request $request, $next) {
+    Route::get('/incidencias', function (Request $request) {
         if ($request->user()->tokenCan('read')) {
-            return $next($request);
+            $ApiController = new ApiController();
+            return $ApiController->getAllIncidents();
         } else {
             return response()->json(['message' => 'El token no tiene permisos'], 403);
         }

@@ -12,6 +12,7 @@ class Incidencia extends Model
     protected $table = 'incidencias';
 
     protected $fillable = [
+        'Nom',
         'Descripcio',
         'Data',
         'Estat',
@@ -25,7 +26,7 @@ class Incidencia extends Model
 
     protected $casts = [
         'Data' => 'date',
-    ]
+    ];
 
     /**
      * Return the zone that the incidence belongs to

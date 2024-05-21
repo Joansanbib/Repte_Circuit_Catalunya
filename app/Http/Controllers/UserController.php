@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Usaria;
+use App\Models\Usuari;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,10 +16,8 @@ class UserController extends Controller
 
     public function index()
     {
-        $this->authorize('viewAny', Usaria::class);
-
-        $user = Usaria::all();
-        return view("users.index", ["user" => $user]);
+        $users = Usuari::all();
+        return view("usuaris.index", ["users" => $users]);
 
     }
     /**
@@ -27,13 +25,13 @@ class UserController extends Controller
      */
 
 
-    public function create()
-    {
-        $this->authorize('create', Usaria::class);
+    // public function create()
+    // {
+    //     $this->authorize('create', Usaria::class);
 
-        return view('users.create');
+    //     return view('users.create');
 
-    }
+    // }
 
 
     /**
@@ -42,33 +40,31 @@ class UserController extends Controller
 
 
 
-    public function store(Request $request)
-    {
-        $this->authorize('create', Usaria::class);
+    // public function store(Request $request)
+    // {
 
-        $validatedData = $request->validate([
-            'NIF' => 'required|max:9',
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
-            'Rol' => 'required',
-        ]);
+    //     $validatedData = $request->validate([
+    //         'NIF' => 'required|max:9',
+    //         'name' => 'required|max:255',
+    //         'email' => 'required|email|max:255|unique:users',
+    //         'password' => 'required|min:6|confirmed',
+    //         'Rol' => 'required',
+    //     ]);
 
-        $validatedData['password'] = Hash::make($validatedData['password']);
+    //     $validatedData['password'] = Hash::make($validatedData['password']);
 
-        $user = Usaria::create($validatedData);
+    //     $user = Usuari::create($validatedData);
 
-        return redirect()->route('users.index')->with('success', 'User created successfully');
-    }
+    //     return redirect()->route('users.index')->with('success', 'User created successfully');
+    // }
     /**
      * Display the specified user
      */
 
-    public function show(Usaria $user)
+    public function show(Usuari $user)
     {
-        $this->authorize('view', $user);
-
-        return view('users.show', ['user' => $user]);
+        $users = Usuari::all();
+        return view("usuaris.index", ["users" => $users]);
     }
 
     /**
@@ -76,11 +72,9 @@ class UserController extends Controller
      */
 
 
-    public function edit(Usaria $user)
+    public function edit(Usuari $user)
     {
-        $this->authorize('update', $user);
-
-        return view('users.edit', ['user' => $user]);
+        return view('usuaris.edit', ['user' => $user]);
     }
 
     /**
@@ -88,25 +82,24 @@ class UserController extends Controller
      */
 
 
-    public function Update(Request $request, Usaria $user)
+    public function Update(Request $request, Usuari $user)
     {
-        $this->authorize('update', $user);
 
         $validatedData = $request->validate([
             'NIF' => 'required|max:9',
             'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users' . $user->id,
-            'password' => 'required|min:6|confirmed',
+            'email' => 'required|email|max:255|unique:usuaris,email,'.$user->id,
+            'password' => 'nullable|min:6',
             'Rol' => 'required',
         ]);
 
-        if ($validatedData['password']) {
+        if (isset($validatedData['password']) && !is_null($validatedData['password'])) {
             $validatedData['password'] = Hash::make($validatedData['password']);
-        } else {
+        }  else {
             unset($validatedData['password']);
-        }
-
+        }       
         $user->update($validatedData);
+        $user->save();
 
         return redirect()->route('users.index')->with('success', 'User updated successfully');
     }
@@ -116,10 +109,9 @@ class UserController extends Controller
      * Remove the specified user from db
      */
 
-    public function destroy(Usaria $user)
+    public function destroy(Usuari $user)
     {
-        $this->authorize('delete', $user);
-
+        
         $user->delete();
 
         return redirect()->route('users.index')->with('success', 'User deleted successfully');
