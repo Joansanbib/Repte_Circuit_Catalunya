@@ -4,6 +4,8 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+
 
 class Handler extends ExceptionHandler
 {
@@ -26,5 +28,20 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $exception)
+    {
+        if ($request->expectsJson() || $request->is('api/*')) {
+            $statusCode = $exception instanceof HttpExceptionInterface ? $exception->getStatusCode() : 500;
+            \Log::error('Exception: ' . $exception->getMessage(), ['exception' => $exception]);
+            return response()->json([
+                'message' => $exception->getMessage(),
+                'status' => 'error',
+                'trace' => $exception->getTrace() // Add trace to debug
+            ], $statusCode);
+        }
+
+        return parent::render($request, $exception);
     }
 }

@@ -1,12 +1,7 @@
+
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\IncidenceController;
-use App\Http\Controllers\ZoneController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\UserResolController;
-
-
 
 /*
 |--------------------------------------------------------------------------

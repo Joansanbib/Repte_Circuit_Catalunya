@@ -8,22 +8,24 @@ use App\Models\Usuari;
 use App\Models\Zona;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\http\Middleware\CheckApiKey;
 
 class ApiController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
-        $this->middleware('api_key_check');
+        $this->middleware('auth:sanctum');
     }
 
     // Incidencias Endpoints
     public function getAllIncidents()
-    {
-        $this->authorize('isAdmin', Usuari::class);
+{
+   
+        // $this->authorize('isAdmin', Usuari::class);
         $incidents = Incidencia::all();
         return response()->json($incidents);
-    }
+}
+
 
     public function getUserIncidents()
     {
@@ -39,8 +41,10 @@ class ApiController extends Controller
 
         return response()->json($incident, 201);
     }
+//
+//pr
 
-    public function updateIncident(Request $request, $id)
+    public function updateIncident(Request $request, $id, $user)
     {
         $incident = Incidencia::find($id);
         $this->authorize('isOwnerOrAdmin', $incident);
