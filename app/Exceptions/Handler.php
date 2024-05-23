@@ -5,6 +5,8 @@ namespace App\Exceptions;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Auth\Access\AuthorizationException;
 
 
 class Handler extends ExceptionHandler
@@ -32,16 +34,22 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $exception)
     {
-        if ($request->expectsJson() || $request->is('api/*')) {
-            $statusCode = $exception instanceof HttpExceptionInterface ? $exception->getStatusCode() : 500;
-            \Log::error('Exception: ' . $exception->getMessage(), ['exception' => $exception]);
-            return response()->json([
-                'message' => $exception->getMessage(),
-                'status' => 'error',
-                'trace' => $exception->getTrace() // Add trace to debug
-            ], $statusCode);
+        if ($exception instanceof NotFoundHttpException) {
+            return response()->view('404', [], 404);
+        } elseif ($exception instanceof AuthorizationException) {
+            return response()->view('403', [], 403);
         }
-
         return parent::render($request, $exception);
+        // if ($request->expectsJson() || $request->is('api/*')) {
+        //     $statusCode = $exception instanceof HttpExceptionInterface ? $exception->getStatusCode() : 500;
+        //     \Log::error('Exception: ' . $exception->getMessage(), ['exception' => $exception]);
+        //     return response()->json([
+        //         'message' => $exception->getMessage(),
+        //         'status' => 'error',
+        //         'trace' => $exception->getTrace() // Add trace to debug
+        //     ], $statusCode);
+        // }
+
+        // return parent::render($request, $exception);
     }
 }

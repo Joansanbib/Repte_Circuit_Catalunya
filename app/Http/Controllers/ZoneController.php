@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Zona;
+use App\Models\Incidencia;
 use Illuminate\Support\Facades\Auth;
 
 class ZoneController extends Controller
@@ -15,7 +16,8 @@ class ZoneController extends Controller
     public function index()
     {
         $zones = Zona::all();
-        return view('zones.index', ['zones' => $zones]);
+        $incidencies = Incidencia::all();
+        return view('zones.index', ['zones' => $zones], ['incidencies' => $incidencies]);
     }
 
 
@@ -26,7 +28,8 @@ class ZoneController extends Controller
 
     public function create()
     {
-        $this->authorize('create', Zona::class);
+        $user = Auth::user();
+        $this->authorize('access', $user);
 
         return view('zones.create');
     }
@@ -39,16 +42,25 @@ class ZoneController extends Controller
 
     public function store(Request $request)
     {
-        $this->authorize('create', Zona::class);
+        $user = Auth::user();
+        $this->authorize('access', $user);
 
         $validatedData = $request->validate([
-            'Nom' => 'required|max:255',
+            'Nom' => 'required|max:100',
             'Descripcio' => 'required',
+            'Latitude' => [
+                'required',
+                'regex:/^\d{1,2}(\.\d{1,8})?$/'
+            ],
+            'Longitude' => [
+                'required',
+                'regex:/^\d{1,3}(\.\d{1,8})?$/'
+            ],
         ]);
 
         $zone = Zona::create($validatedData);
 
-        return required()->route('zones.index')->with('success', 'Zone created successfully');
+        return redirect()->route('zones.index')->with('success', 'Zone created successfully');
     }
 
     /**

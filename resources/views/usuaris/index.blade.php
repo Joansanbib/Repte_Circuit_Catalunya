@@ -3,16 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Index Incidències</title>
+  <title>Index Usuaris</title>
   <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css">
+  <link rel="stylesheet" href="{{ asset('css/styles_navbar.css') }}">
+  </head>
+<body>
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+    <header id="header">
+        <ul>
+            <li><a href="/users">Usuaris</a></li>
+            <li><a href="/incidences">Incidències</a></li>
+            <li><a href="/zones">Zones</a></li>
+            <li><a href="/logout">Tancar sessió</a></li>
+            <li><a href="/">Home</a></li>
+        </ul>
+    </header>
+</nav>
 <style>
     #table_div{
         display:flex;
         justify-content:center; 
-        font-family: Arial, sans-serif !important;
-        font-weight: 100 !important;
     }
     #table_div td{
         text-align: center;
@@ -94,3 +106,6 @@
         }).render(document.getElementById('table_div'));;
     });
 </script>
+</body>
+</html>
+

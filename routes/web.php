@@ -6,7 +6,7 @@ use App\Http\Controllers\IncidenceController;
 use App\Http\Controllers\ZoneController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserResolController;
-
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +21,7 @@ use App\Http\Controllers\UserResolController;
 
 Route::get('/', function () {
     return view('dashboard');
-});
+})->middleware('auth');
 
 Route::middleware([
     'auth:sanctum',
@@ -33,9 +33,14 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::resource('incidences', IncidenceController::class);
-Route::get('/incidences/delete/{incidence}', [IncidenceController::class, 'destroy'])->name('incidences.destroy');
-Route::resource('zones', ZoneController::class);
-Route::resource('users', UserController::class);
-Route::get('/users/delete/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-Route::resource('user_resols', UserResolController::class);
+Route::get('/logout', function (){
+    Auth::logout();
+    return redirect('/');
+})->middleware('auth');
+
+Route::resource('incidences', IncidenceController::class)->middleware('auth');;
+Route::get('/incidences/delete/{incidence}', [IncidenceController::class, 'destroy'])->name('incidences.destroy')->middleware('auth');;
+Route::resource('zones', ZoneController::class)->middleware('auth');;
+Route::resource('users', UserController::class)->middleware('auth');;
+Route::get('/users/delete/{user}', [UserController::class, 'destroy'])->name('users.destroy')->middleware('auth');;
+Route::resource('user_resols', UserResolController::class)->middleware('auth');;

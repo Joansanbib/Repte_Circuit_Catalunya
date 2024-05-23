@@ -18,11 +18,10 @@
 <body>
 <div style="text-align: center;">
   <div class="card" style="width: 400px; margin: 0 auto; margin-top: 20px">
-    <div class="card-body" style="font-size: 14px;">
-      EDICIÓ D'UN USUARI
-    </div>
+  <div class="card-header">
+      <h5 class="card-title">Edició d'un usuari</h5>
   </div>
-</div>
+  <div class="card-body">
   <form class="custom-form" method="POST" action="/users/{{$user->id}}" enctype="multipart/form-data">
   @csrf
   @method('PUT')
@@ -52,6 +51,9 @@
 
     <button type="submit" class="btn btn-primary">ENVIAR</button>
   </form>
+  </div>
+</div>
+</div>
 
   <!-- Bootstrap JS y dependencias -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

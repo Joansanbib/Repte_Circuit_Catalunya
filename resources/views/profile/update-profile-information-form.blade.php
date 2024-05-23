@@ -1,4 +1,4 @@
-<style>
+<!-- <style>
     @font-face {
     font-family: FontSpecial;
     src: url(public/fonts/Bowlby_One_SC/BowlbyOneSC-Regular.ttf);
@@ -7,8 +7,8 @@
     *{
         font-family: FontSpecial;
     }
-</style>
-<x-form-section submit="updateProfileInformation" id="perfil">
+</style> -->
+<x-form-section submit="updateProfileInformation">
     <x-slot name="title">
         {{ __('Informació del perfil') }}
     </x-slot>

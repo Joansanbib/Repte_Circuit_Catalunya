@@ -6,12 +6,8 @@
             <li><a href="/users">Usuaris</a></li>
             <li><a href="/incidences">Incidències</a></li>
             <li><a href="/zones">Zones</a></li>
-            <li>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button type="submit">Cerrar sesión</button>
-            </li>
-            <li><a href="/user/profile">Perfil</a></li>
+            <li><a href="/logout">Tancar sessió</a></li>
+            <li><a href="/">Home</a></li>
         </ul>
     </header>
 </body>

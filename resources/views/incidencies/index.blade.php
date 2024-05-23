@@ -7,12 +7,26 @@
   <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css">
+  <link rel="stylesheet" href="{{ asset('css/styles_navbar.css') }}">
+</head>
+<body>
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+    <header id="header">
+        <ul>
+            <li><a href="/users">Usuaris</a></li>
+            <li><a href="/incidences/create">+ Incidència</a></li>
+            <li><a href="/zones">Zones</a></li>
+            <li><a href="/logout">Tancar sessió</a></li>
+            <li><a href="/">Home</a></li>
+        </ul>
+    </header>
+</nav>
+
 <style>
     #table_div{
         display:flex;
-        justify-content:center; 
-        font-family: Arial, sans-serif !important;
-        font-weight: 100 !important;
+        justify-content:center;
+        
     }
     #table_div td{
         text-align: center;
@@ -32,6 +46,7 @@
             'Estat' => $row->Estat,
             'Prioritat' => $row->Prioritat,
             'Rol_assignat' => $row->Rol_assignat,
+            'Imatge' => asset('img/' . $row->Ruta_img), 
         );
     }
 
@@ -45,6 +60,7 @@
             $row['Estat'],
             $row['Prioritat'],
             $row['Rol_assignat'],
+            $row['Imatge'],
         ];
     }
 
@@ -67,6 +83,16 @@
                'Estat',
                'Prioritat',
                'Rol_assignat',
+                {
+                    name: 'Imatge',
+                    formatter: (cell) => {
+                        return gridjs.h('img', {
+                            src: cell,
+                            width: 100, // Adjust as needed
+                            height: 100, 
+                        });
+                    }
+                },
                {
                 formatter: (cell, row) => {
                     const editarButton = gridjs.h('button', {
@@ -100,3 +126,5 @@
         }).render(document.getElementById('table_div'));;
     });
 </script>
+</body>
+</html>

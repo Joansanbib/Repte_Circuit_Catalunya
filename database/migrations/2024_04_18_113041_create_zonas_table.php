@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('zonas', function (Blueprint $table) {
             $table->id();
-            $table->string('Nom', 100);            			
+            $table->string('Nom', 100);
+            $table->decimal('Latitude', 10, 8);
+            $table->decimal('Longitude', 11, 8);
             $table->string('Descripcio');
-            $table->integer('Ultima_incidencia');
+            //$table->integer('Ultima_incidencia');
             $table->timestamps();
         });
     }

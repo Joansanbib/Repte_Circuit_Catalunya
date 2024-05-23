@@ -74,6 +74,9 @@ class UserController extends Controller
 
     public function edit(Usuari $user)
     {
+        $user = Auth::user();
+        $this->authorize('access', $user);
+
         return view('usuaris.edit', ['user' => $user]);
     }
 
@@ -84,6 +87,8 @@ class UserController extends Controller
 
     public function Update(Request $request, Usuari $user)
     {
+        $user = Auth::user();
+        $this->authorize('access', $user);
 
         $validatedData = $request->validate([
             'NIF' => 'required|max:9',
@@ -111,6 +116,8 @@ class UserController extends Controller
 
     public function destroy(Usuari $user)
     {
+        $user = Auth::user();
+        $this->authorize('access', $user);
         
         $user->delete();
 
