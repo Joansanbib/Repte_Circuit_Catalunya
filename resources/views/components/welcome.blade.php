@@ -14,8 +14,15 @@
     <div class="card zones">
     <a href="/zones">
       <h1>ZONES</h1>
-    </div>
       </a>
+    </div>
+    <div class="card tokens">
+    <a href="/user/api-tokens">
+      <h1>TOKEN</h1>
+      </a>
+    </div>
+      
+      
   </section>
 </body>
 
