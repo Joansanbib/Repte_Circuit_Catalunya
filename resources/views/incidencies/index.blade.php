@@ -21,7 +21,7 @@
 
             <li><a href="/">Home</a></li>
             <li><a href="/incidences/create">+ Incidència</a></li>
-            <li><a href="/zones/create">+ Zona</a></li>
+            <li><a href="/zones">Zones</a></li>
             <li><a href="/users">Usuaris</a></li>
            <!--  <li><a href="/incidences">Incidències</a></li>
             <li><a href="/zones">Zones</a></li> -->

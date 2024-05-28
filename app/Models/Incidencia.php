@@ -34,7 +34,7 @@ class Incidencia extends Model
 
     public function zona()
     {
-        return $this->belongsTo(Zona::class, 'Zona');
+        return $this->belongsTo(Zona::class);
     }
 
     /**

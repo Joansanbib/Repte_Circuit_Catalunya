@@ -8,7 +8,9 @@ use App\Models\Usuari;
 use App\Models\Zona;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\http\Middleware\CheckApiKey;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash; 
+
 
 class ApiController extends Controller
 {
@@ -17,14 +19,88 @@ class ApiController extends Controller
         $this->middleware('auth:sanctum');
     }
 
-    // Incidencias Endpoints
     public function getAllIncidents()
-{
-   
-        // $this->authorize('isAdmin', Usuari::class);
+    {
         $incidents = Incidencia::all();
+        foreach ($incidents as $incident) {
+            $incident->Data = $incident->Data->toIso8601String();
+        }
         return response()->json($incidents);
-}
+    }
+    public function getAllZones()
+    {
+        $zones = Zona::all();
+        return response()->json($zones);
+    }
+    public function createIncident(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'Nom' => 'required|max:150',
+            'Descripcio' => 'required|max:500',
+            'Data' => 'required|date',
+            'Estat' => 'required',
+            'Prioritat' => 'required',
+            'Zona' => 'required',
+            'Rol_assignat' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
+        $incidencia = new Incidencia();
+        $incidencia->Nom = $request->input('Nom');
+        $incidencia->Descripcio = $request->input('Descripcio');
+        $incidencia->Data = $request->input('Data');
+        $incidencia->Estat = $request->input('Estat');
+        $incidencia->Prioritat = $request->input('Prioritat');
+        $incidencia->Zona = $request->input('Zona');
+        $incidencia->Ruta_img = $request->input('Ruta_img');
+        $incidencia->Rol_assignat = $request->input('Rol_assignat');
+
+        $incidencia->save();
+        return response()->json($incidencia, 201);
+    }
+
+    public function login(Request $request){
+        $email = $request->input('email');
+        $password = $request->input('password');
+        $user = Usuari::where('email', $email)->first();
+        if ($user && Hash::check($password, $user->password)) {
+            return response()->json(['user' => $user], 200);
+        }
+        else {
+            return response()->json(['message' => 'Credenciales incorrectas'], 401);
+        }
+    }
+    public function register(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|unique:usuaris',
+            'password' => 'required|min:8',
+            'name' => 'required',
+            'NIF' => 'required|regex:/^[0-9]{8}[A-Za-z]$/|unique:usuaris',
+        ]);
+        if ($validator->fails()) {
+            return response()->noContent(400);
+        }
+        $user = new Usuari();
+        $user->email = $request->input('email');
+        $user->password = Hash::make($request->input('password'));
+        $user->name = $request->input('name');
+        $user->NIF = $request->input('NIF');
+        $user->Rol = "Operari";
+        $user->save();
+        return response()->noContent(201);
+    }
+
+
+
+
+
+
+
+
+
 
 
     public function getUserIncidents()
@@ -33,14 +109,7 @@ class ApiController extends Controller
         return response()->json($incidents);
     }
 
-    public function createIncident(Request $request)
-    {
-        $incident = new Incidencia($request->all());
-        $incident->user_id = Auth::id();
-        $incident->save();
-
-        return response()->json($incident, 201);
-    }
+    
 //
 //pr
 
